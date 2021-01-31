@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Flask App</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-image: url("../static/images/wallpaper.jpg");
+            background-size: cover;
+        }
+
+        img {
+            box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.35);
+
+        }
+
+        fieldset {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: orange;
+            width: 50%;
+            border-radius: 10px;
+            opacity: 0.8;
+            box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.35);
+
+        }
+
+        legend {
+            padding: 0px 3px;
+            font-weight: bold;
+            font-variant: small-caps;
+            font-size: large;
+
+        }
+
+        input:focus {
+            background: light;
+        }
+
+        input,
+        textarea {
+            width: 249px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        select {
+            width: 254px;
+        }
+
+        input[type=text] {
+            padding: 10px;
+            margin: 10px 0;
+            padding: 15px;
+            border-color: black;
+            border-radius: 10px;
+            box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.35);
+            border: 1;
+            background-color: lightgoldenrodyellow;
+            padding-left: 10px;
+        }
+
+
+        button[type=submit] {
+            appearance: none;
+            -webkit-appearance: none;
+            padding: 10px;
+            border: none;
+            background-color: lightgreen;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 5px;
+            width: 30%;
+            box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.35);
+            margin: 5px;
+        }
+
+        text {
+            font-weight: bold;
+            font-variant: small-caps;
+            font-size: large;
+            animation-duration: 3s;
+            animation-name: slidein;
+            color: black;
+        }
+
+        p {
+            font-variant: small-caps;
+            font-weight: bold;
+            font-size: larger;
+        }
+
+        @keyframes slidein {
+            from {
+                margin-left: 100%;
+                width: 300%;
+            }
+
+            to {
+                margin-left: 0%;
+                width: 100%;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+        function buttonclick() {
+            document.getElementById('IMG').style.visibility = "visible";
+            document.getElementById('IMG2').style.visibility = "visible";
+            document.getElementById('IMG3').style.visibility = "visible";
+            document.getElementById('IMG4').style.visibility = "visible";
+            document.getElementById('IMG5').style.visibility = "visible";
+            document.getElementById('IMG6').style.visibility = "visible";
+            document.getElementById('IMG7').style.visibility = "visible";
+            document.getElementById("TEXTE").innerHTML = "1) Chargement du jeu de données ";
+            document.getElementById("TEXTE2").innerHTML = "2) Nettoyage de la data ";
+            document.getElementById("TEXTE3").innerHTML = "3) Visualisation du jeu de données ";
+            document.getElementById("TEXTE4").innerHTML = "4) Mise a l'échelle ";
+            document.getElementById("TEXTE5").innerHTML = "5) Mise en place des données d'entrainement et de test ainsi que démarage de recherches de parametres optimaux ";
+            document.getElementById("TEXTE6").innerHTML = "6) Entrainement sur différent modeles afin de déterminer lequel est le plus performant";
+            document.getElementById("TEXTE7").innerHTML = "7) Entrainements sur d'autres modeles ";
+            document.getElementById("TEXTE8").innerHTML = "8)Le Modele Knn a été le plus performant et devient donc le choix de modele pour cette page";
+
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+    <button type="submit" onclick="parent.location='../landing.html'">Retourner page precedente</button><br>
+    <fieldset>
+        <legend>Prediction de fruits</legend>
+        <form action="{{ url_for('predict')}}" method="post">
+            <input type="text" name="mass" placeholder="Poids" required="required" />
+            <input type="text" name="width" placeholder="Largeur" required="required" />
+            <input type="text" name="height" placeholder="Hauteur" required="required" />
+            <br><br><br>
+            <button type="submit" class=submit>Prediction</button>
+        </form>
+        <br>
+        <br>
+        <text>{{zone_prediction}} </text>
+        <p>1 : pomme, 2 : mandarine, 3 : Orange , 4 : Citron</p>
+        </div>
+    </fieldset>
+    <button type="submit" onclick="buttonclick()">Plus de details</button><button type="submit"
+        onclick="history.go(0)">Cacher les details</button><br>
+    <p id="TEXTE"></p>
+    <img id="IMG" src="../static/images/import_csv.jpg" style="visibility:hidden"><br>
+    <p id="TEXTE2"></p>
+    <img id="IMG2" src="../static/images/premier nettoyage.jpg" style="visibility:hidden"><br>
+    <p id="TEXTE3"></p>
+    <img id="IMG3" src="../static/images/premiere_visualisation.jpg"style="visibility:hidden"><br>
+    <p id="TEXTE4"></p>
+    <img id="IMG4" src="../static/images/echelle.jpg" style="visibility:hidden"><br>
+    <p id="TEXTE5"></p>
+    <img id="IMG5" src="../static/images/mep_entr.jpg" style="visibility:hidden"><br>
+    <p id="TEXTE6"></p>
+    <img id="IMG6" src="../static/images/diff_modeles.jpg" style="visibility:hidden"><br>
+    <p id="TEXTE7"></p>
+    <img id="IMG7" src="../static/images/diff_modeles2.jpg" style="visibility:hidden"><br>
+    <p id="TEXTE8"></p>
+</body>
+
+</html>
