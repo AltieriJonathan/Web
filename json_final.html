@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+</style>
+
+
+
+
+<body>
+    <main class="fullwrapper">
+      <ul id="users" class="users"></ul>
+      <div class="wrapper">
+        <div id="card" class="card"></div>
+        <ul id="posts" class="posts"></ul>
+      </div>
+  
+    </main>
+  </body>
+  
+  <script>
+    const myInit = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+    };
+  
+    
+    const users = [];
+    const userlist = document.getElementById("users");
+    const usercard = document.getElementById("card");
+    const userposts = document.getElementById("posts");
+  
+    
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json()) 
+      .then((json) => { 
+        json.forEach(element => { 
+          const user = element;
+          fetch('https://jsonplaceholder.typicode.com/posts?userId=' + user.id) 
+          .then((response2) => response2.json())
+          .then((posts) => { 
+            user.posts = [];
+            
+            posts.forEach(elem => { 
+              fetch('https://jsonplaceholder.typicode.com/comments?postId=' + elem.id)
+                .then((response3) => response3.json())
+                .then((comments) => {
+                 
+                  elem.comments = comments;
+                  
+                  user.posts.push(elem);
+                })
+                .catch(err => console.log(err));
+              });
+            })
+            .catch(err => console.log(err));
+            
+            users.push(user)
+        });
+        console.log(users);
+      }).catch(err => console.log(err));
+      
+    
+    function populateUsers(obj) {
+      obj.forEach(element => {
+        const li = document.createElement("li");
+        li.textContent = element.name;
+        li.addEventListener("click", () => populateWrapper(element));
+        userlist.appendChild(li);
+      });
+  
+      populateWrapper(obj[0])
+    }
+  
+    
+    function populateCard(user) {
+  
+      usercard.innerHTML = '';
+      const icon = document.createElement("h4");
+      icon.textContent = "🧑";
+  
+      const name = document.createElement("h1");
+      name.textContent = user.name;
+  
+      const username = document.createElement("span");
+      username.textContent = "(" + user.username + ")";
+      name.appendChild(username);
+      
+      const mail = document.createElement("h2");
+      mail.textContent = user.email;
+      
+      const phone = document.createElement("h3");
+      phone.textContent = user.phone;
+      
+      
+      const place = document.createElement("span");
+      place.textContent = user.address.suite + " " + user.address.street;
+      
+      const city = document.createElement("span");
+      city.textContent = user.address.zipcode + " " + user.address.city;
+      
+      const website = document.createElement("span");
+      website.textContent = user.website;
+  
+      const address = document.createElement("p");
+      address.appendChild(place);
+      address.appendChild(city);
+      address.appendChild(website);
+  
+      usercard.appendChild(icon)
+      usercard.appendChild(name)
+      usercard.appendChild(mail)
+      usercard.appendChild(phone)
+      usercard.appendChild(address)
+    }
+  
+    
+    function populatePosts(user) {
+      userposts.innerHTML = "";
+  
+      user.posts.forEach(element => {
+        const title = document.createElement("h4");
+        title.textContent = element.title;
+        const body = document.createElement("p");
+        body.textContent = element.body;
+        
+        const li = document.createElement("li");
+        const comments = document.createElement("ul");
+        comments.classList.add("comments");
+        
+        const loadcmts = document.createElement("p");
+        loadcmts.textContent = "Afficher les commentaires";
+        loadcmts.classList.add("pointer");
+        loadcmts.addEventListener("click", () => loadComments(element, comments));
+        
+        li.appendChild(title);
+        li.appendChild(body);
+        li.appendChild(loadcmts);
+        li.appendChild(comments);
+        
+        userposts.appendChild(li);
+      });
+      
+    }
+    
+    
+    function loadComments(post, wrapper) {
+      if(wrapper.innerHTML === "") {
+        post.comments.forEach(element => {
+          console.log(element);
+          const name = document.createElement("h5");
+          name.textContent = element.name;
+  
+          const email = document.createElement("h6");
+          email.textContent = element.email;
+  
+          const body = document.createElement("p");
+          body.textContent = element.body;
+  
+          const li = document.createElement("li");
+          li.classList.add("comment");
+          li.appendChild(name);
+          li.appendChild(email);
+          li.appendChild(body);
+  
+          wrapper.appendChild(li);
+        });
+      } else { wrapper.innerHTML = ""; }
+    }
+  
+    
+    function populateWrapper(user) {
+  
+      populateCard(user);
+      populatePosts(user);
+  
+    }
+  
+    setTimeout(() => {
+      populateUsers(users);
+    }, 1000);
+  </script>
+</html>
