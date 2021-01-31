@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+    <html lang="fr">
+        <head>
+            <title>Html</title>
+            <meta charset="UTF-8">
+        </head>
+        <body>
+            <Fieldset>
+                <form method="GET">
+                  Nom: <input type="text" name="nom" min="2" max="45" pattern="[^0-9]"> <br>
+                 Prenom: <input type="text" name="prenom" min="2" max="45" pattern="[^0-9]"> <br>
+                  Adresse email: <input type="email"pattern="\.(com|org|net|fr)$"><br>
+        
+                 Sexe:<br>
+                  Masculin<input type ="radio" name="sexe" value="masculin">
+                 Féminin<input type ="radio" name="sexe" value="féminin" checked>
+                </form>
+                <form method ="POST"enctype="multipart/form-data">
+                    <input type="file" accept=".png,.jpeg" ><br>
+                </form>
+                <form method="GET">
+                   Pays: <select>
+                        <option value="1"selected>France</option>
+                        <option value="2" >Allemagne</option>
+                        <option value="3">Angleterre</option>
+                        <option value="4">Italie</option>
+                        <option value="5">Suisse</option>
+                        <option value="5">Espagne</option>
+                   </select><br>
+                     <select multiple size="4">
+                            <option value="1">Java</option>
+                            <option value="2" >C</option>
+                            <option value="3">C++</option>
+                            <option value="4">PHP</option>
+                            <option value="5">HTML</option>
+                            <option value="5">SQL</option>
+                        </select>
+                        Pour faire plusieurs choix maintenez la touche CTRL enfoncée<br>
+                        Domaine d'activités :<br>
+                        <label for="Plombier">Développement</label> <input type="checkbox" value="Plombier"id="Plombier"> 
+                        <label for="gp">Gestion projet</label> <input type="checkbox" name="Gestion Projet"id="gp"> 
+                        <label for="bdd">Bases de données</label> <input type="checkbox" Value="Base de données"id="bdd"> <br>
+                        <input type="submit" value="Envoyer">
+           <input type="reset"  value="Annuler">
+                </form>
+                </Fieldset>
+                </body>
+                </html>

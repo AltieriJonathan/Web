@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Html</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        #box {
+            border: 1px dotted navy;
+            padding-left: 3px;
+            background-color: lightcoral;
+            width: 330px;
+        }
+
+        #bouton {
+            margin-top: 10px;
+            padding-left: 3px;
+        }
+
+        #non {
+            width: 190px;
+            display: none;
+        }
+
+        p {
+            margin-top: 5px;
+            margin-bottom: 3px;
+        }
+
+        .first {
+            background-color: lightcoral;
+        }
+        .second {
+            background-color: lightcoral;
+        }
+        td {
+            font-family: monospace;
+            padding: 5px;
+            border: 1px solid silver;
+        }
+
+        table {
+            margin-top: 12px;
+            border-collapse: collapse;
+        }
+    </style>
+    <script type="text/javascript">
+        function dosetItem() {
+           
+            var Parcelle = document.getElementById("parcel").value;
+            var Cepage = document.getElementById("cep").value;
+            if (localStorage.getItem(Parcelle) != null)
+            {
+                Cepage+= ","+ localStorage.getItem(Parcelle);
+            }
+            localStorage.setItem(Parcelle, Cepage);
+            document.getElementById("parcel").value = "";
+            document.getElementById("cep").value = "";
+            afficher();
+        }
+        function dogetItem() {
+            var Parcelle = document.getElementById("parcel").value;
+            var Cepage = localStorage.getItem(Parcelle);
+
+            if (localStorage.getItem(Parcelle)){
+                localStorage.removeItem(Cepage);
+                var newvalue = document.getElementById("cep").value;
+                    localStorage.setItem(Parcelle,newvalue)
+                }
+                else {
+                     localStorage.setItem(Parcelle,Cepage);
+                }
+            
+            afficher();
+        }
+        function doremoveItem() {
+            var Parcelle = document.getElementById("parcel").value;
+            localStorage.removeItem(Parcelle);
+            document.getElementById("parcel").value = "";
+            afficher();
+        }
+        function doClear() {
+            localStorage.clear();
+            afficher();
+        }
+        function afficher() {
+            var key = "";
+            var paires = "<tr class=\"first\"><td><b>Parcelle</b></td><td><b>Cépage</b></td></tr>\n";
+            var i = 0;
+            for (i = 0; i <= localStorage.length - 1; i++) {
+                key = localStorage.key(i);
+                paires += "<tr><td>" + key + "</td>\n<td>" + localStorage.getItem(key) + "</td></tr>\n";
+            }
+            if (paires == "<tr class=\"first\"><td><b>Parcelle</b></td><td><b>Cépage</b></td></tr>\n") {
+                paires += "<tr><td><i>Vide</i></td>\n<td><i>Vide</i></td></tr>\n";
+            } 
+            document.getElementById('paires').innerHTML = paires;
+        }
+        function affichertri(){
+            var lecepage = document.getElementById("cep2").value
+             var key = "";
+            var resultattri = "<tr class=\"second\"><td><b>Parcelle</b></td><td><b>Cépage</b></td></tr>\n";
+            var i = 0;
+            for (i = 0; i <= localStorage.length - 1; i++) {
+                key = localStorage.key(i);
+                if (localStorage.getItem(key).includes(lecepage)){
+                    resultattri += "<tr><td>" + key + "</td>\n<td>" + localStorage.getItem(key) + "</td></tr>\n";
+            }}
+            if (resultattri == "<tr class=\"second\"><td><b>Parcelle</b></td><td><b>Cépage</b></td></tr>\n") {
+                resultattri += "<tr><td><i>Vide</i></td>\n<td><i>Vide</i></td></tr>\n";
+            } 
+            document.getElementById('resultattri').innerHTML = resultattri;
+        }
+        {
+
+        }
+    </script>
+</head>
+
+<body onload="afficher()">
+    <header>
+        <h1>Saisie des parcelles</h1>
+    </header>
+    <div id="non"></div>
+    <section>
+        <form>
+            <div id="box">
+                <p>
+                    <label for="parcel">Parcelle:</label><br>
+                    <input id="parcel" name="parcel" size="30" placeholder="Parcelle">
+                </p>
+                <p>
+                    <label for="cep">Cépage:</label><br>
+                    <select name="Cépage" id="cep">
+                        <option value="">--Faites votre choix--</option>
+                        <option value="Merlot">Merlot</option>
+                        <option value="Carignan">Carignan </option>
+                        <option value="Syrah">Syrah</option>
+                        <option value="Muscat">Muscat</option>
+                        <option value="Grenache noir">Grenache noir</option>
+                        <option value="Mourvedre">Mourvèdre</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="button" value="Ajouter" onclick="dosetItem()">
+                    <input type="button" value="Modifier" onclick="dogetItem()">
+                    <input type=button value="Supprimer" onclick="doremoveItem()">
+                </p>
+            </div>
+        </form>
+        <table id=paires></table>
+    </section>
+    <input type=button id="bouton" value="Nouvelle liste" onclick="doClear()">
+    <input type=button id="bouton" value="Afficher les parcelles concernant le cépage" onclick="affichertri()">
+    <select name="Cépage" id="cep2">
+        <option value="">--Faites votre choix--</option>
+        <option value="Merlot">Merlot</option>
+        <option value="Carignan">Carignan </option>
+        <option value="Syrah">Syrah</option>
+        <option value="Muscat">Muscat</option>
+        <option value="Grenache noir">Grenache noir</option>
+        <option value="Mourvedre">Mourvèdre</option>
+    </select><br>
+    <table id=resultattri></table>
+</body>
+
+</html>
